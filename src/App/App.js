@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Route, Link} from 'react-router-dom';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NoteListNav from '../NoteListNav/NoteListNav';
 import NotePageNav from '../NotePageNav/NotePageNav';
 import NoteListMain from '../NoteListMain/NoteListMain';
@@ -10,11 +10,13 @@ import config from '../config';
 import './App.css';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNote from '../AddNote/AddNote';
+import ErrorBoundary from '../ErrorBoundary'
 
 class App extends Component {
     state = {
         notes: [],
-        folders: []
+        folders: [],
+        error: null
     };
 
     componentDidMount() {
@@ -31,22 +33,44 @@ class App extends Component {
                 return Promise.all([notesRes.json(), foldersRes.json()]);
             })
             .then(([notes, folders]) => {
-                this.setState({notes, folders});
+                this.setState({ notes, folders });
             })
             .catch(error => {
-                console.error({error});
+                this.setState({ error: 'ERROR: Could not fetch data. Please try again' })
             });
     }
 
     addFolder = name => {
-        
+
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name})
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name })
         })
-        .then(res =>  res.json() )
-        .then(data => console.log(data))
+            .then(res => res.json())
+            .then(data => {
+                const folders = this.state.folders
+                folders.push(data)
+                this.setState({ folders })
+            })
+    }
+
+    addNote = (name, context, folderId) => {
+        fetch(`${config.API_ENDPOINT}/notes`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                context,
+                folderId
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                const notes = this.state.notes
+                notes.push(data)
+                this.setState({ notes })
+            })
     }
 
     handleDeleteNote = noteId => {
@@ -98,20 +122,28 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             deleteNote: this.handleDeleteNote,
-            addFolder: this.addFolder
+            addFolder: this.addFolder,
+            addNote: this.addNote
         };
         return (
             <ApiContext.Provider value={value}>
-                <div className="App">
-                    <nav className="App__nav">{this.renderNavRoutes()}</nav>
-                    <header className="App__header">
-                        <h1>
-                            <Link to="/">Noteful</Link>{' '}
-                            <FontAwesomeIcon icon="check-double" />
-                        </h1>
-                    </header>
-                    <main className="App__main">{this.renderMainRoutes()}</main>
-                </div>
+                <ErrorBoundary>
+                    <div className="App">
+                        <nav className="App__nav">{this.renderNavRoutes()}</nav>
+                        <header className="App__header">
+                            <h1>
+                                <Link to="/">Noteful</Link>{' '}
+                                <FontAwesomeIcon icon="check-double" />
+                            </h1>
+                        </header>
+                        <main className="App__main">
+                            <div className="error">
+                            {this.state.error}
+                            </div>
+                            {this.renderMainRoutes()}
+                        </main>
+                    </div>
+                </ErrorBoundary>
             </ApiContext.Provider>
         );
     }

@@ -8,7 +8,7 @@ export default class AddFolder extends React.Component {
     storeNewFolderData(str) {
         const folderName = str
         this.context.addFolder(folderName)
-        console.log(this.props)
+        this.props.history.push('/')
     }
 
     render(){
