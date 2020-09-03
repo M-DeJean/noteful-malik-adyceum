@@ -38,6 +38,18 @@ class App extends Component {
             });
     }
 
+    addFolder = name => {
+        const newName = JSON.stringify(name)
+        fetch(`${config.API_ENDPOINT}/folders`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: newName
+        })
+        .then(res => { res.json() })
+        .then(data => { this.setState({ folders: data })
+        })
+    }
+
     handleDeleteNote = noteId => {
         this.setState({
             notes: this.state.notes.filter(note => note.id !== noteId)
@@ -84,7 +96,8 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            addFolder: this.addFolder
         };
         return (
             <ApiContext.Provider value={value}>

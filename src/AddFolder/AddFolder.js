@@ -1,10 +1,13 @@
 import React from 'react';
+import ApiContext from '../ApiContext';
 
 export default class AddFolder extends React.Component {
 
+    static contextType = ApiContext;
+
     storeNewFolderData(str) {
         const folderName = str
-        console.log(folderName)
+        this.context.addFolder(folderName)
     }
 
     render(){
