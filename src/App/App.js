@@ -45,7 +45,7 @@ class App extends Component {
             headers: {'Content-Type': 'application/json'},
             body: newName
         })
-        .then(res => { res.json() })
+        .then(res => res.json())
         .then(data => { this.setState({ folders: data })
         })
     }
