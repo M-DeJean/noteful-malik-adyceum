@@ -39,7 +39,7 @@ class App extends Component {
     }
 
     addFolder = name => {
-        const newName = JSON.stringify(name)
+        
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -48,6 +48,8 @@ class App extends Component {
         .then(res => res.json())
         .then(data => { this.setState({ folders: data })
         })
+        .then(res =>  res.json() )
+        .then(data => console.log(data))
     }
 
     handleDeleteNote = noteId => {
@@ -67,11 +69,11 @@ class App extends Component {
                         component={NoteListNav}
                     />
                 ))}
+                <Route path="/add-note" component={NoteListNav} />
+                <Route path="/add-folder" component={NoteListNav} />
                 <Route path="/note/:noteId" component={NotePageNav} />
                 <Route path="/add-folder" component={NotePageNav} />
-                <Route path="/add-folder" component={AddFolder} />
                 <Route path="/add-note" component={NotePageNav} />
-                <Route path="/add-note" component={AddNote} />
             </>
         );
     }
@@ -87,7 +89,9 @@ class App extends Component {
                         component={NoteListMain}
                     />
                 ))}
+                <Route path="/add-folder" component={AddFolder} />
                 <Route path="/note/:noteId" component={NotePageMain} />
+                <Route path="/add-note" component={AddNote} />
             </>
         );
     }
