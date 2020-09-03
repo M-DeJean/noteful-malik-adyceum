@@ -43,7 +43,7 @@ class App extends Component {
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: newName
+            body: name
         })
         .then(res => res.json())
         .then(data => { this.setState({ folders: data })
@@ -51,6 +51,19 @@ class App extends Component {
         .then(res =>  res.json() )
         .then(data => console.log(data))
     }
+
+    // addNote(name, content)=> {
+    //     fetch(`${config.API_ENDPOINT}/notes`, {
+    //         method: 'POST',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: name, content
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => { this.setState({ notes: data })
+    //     })
+    //     .then(res =>  res.json() )
+    //     .then(data => console.log(data))
+    // }
 
     handleDeleteNote = noteId => {
         this.setState({
