@@ -40,7 +40,29 @@
 }
 
 .error {
-  color: #bdbdbd;
+  color: red;
   font-size: 30px;
   text-align: center;
+}
+
+.form {
+  color: #bdbdbd;
+  padding: 10px 10px 20px;
+  text-align: center;
+  background-color: #0b1f3a;
+  margin: 20px;
+  height: auto;
+  list-style: none;
+}
+
+.form button{
+  margin: 0 5px;
+}
+
+.form input{
+  margin-top: 5px;
+}
+
+.form ul{
+  list-style: none;
 }

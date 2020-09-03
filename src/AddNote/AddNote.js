@@ -13,7 +13,7 @@ export default class AddNote extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmitNote}>
+            <form className="form" onSubmit={this.handleSubmitNote}>
                 <h2>Add New Note</h2>
                 <ul id="menuHeader">
                     <li><select id="dropdown" name="folderId">
@@ -27,9 +27,9 @@ export default class AddNote extends React.Component {
                     </select></li>
                 </ul>
                 <label>Note Name:</label>
-                <input type='text' className='js-note-name' name="noteName"></input><br />
+                <input type='text' name="noteName"></input><br />
                 <label>New Content:</label>
-                <input type='text' className='js-note-content'name="noteContent"></input>
+                <input type='text' name="noteContent"></input>
                 <button type='submit'>Submit</button>
             </form >
         );
