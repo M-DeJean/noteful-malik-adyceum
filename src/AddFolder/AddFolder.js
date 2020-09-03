@@ -8,19 +8,19 @@ export default class AddFolder extends React.Component {
     storeNewFolderData(str) {
         const folderName = str
         this.context.addFolder(folderName)
+        console.log(this.props)
     }
 
     render(){
-       let name = ''
         
         return (
             <form onSubmit={(e) => {
                 e.preventDefault()
-                this.storeNewFolderData(name) 
+                this.storeNewFolderData(e.target.folderName.value) 
                 }} >
                 <h2>Add New Folder</h2>
                 <label>Folder Name:</label>
-                <input type='text' className='js-folder-name' onChange={e => name = e.target.value}></input>
+                <input name="folderName" type='text' className='js-folder-name'></input>
                 <button type='submit' >Submit</button>
                 
             </form>
