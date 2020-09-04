@@ -5,19 +5,15 @@ export default class AddNote extends React.Component {
 
     static contextType = ApiContext
 
-    storeNewNoteData(str) {
-        const noteName = str
-        this.context.addNote(noteName)
-        console.log(this.props)
+    storeNewNoteData = (e) => {
+        e.preventDefault()
+        this.context.addNote(e.target.noteName.value, e.target.noteContent.value, e.target.folderId.value)
+        this.props.history.push('/')
     }
 
     render() {
         return (
-            <form onSubmit={(e) => {
-                e.preventDefault()
-                this.storeNewNoteData(e.target.noteName.value)
-                this.storeNewNoteData(e.target.noteContent.value) 
-                }} >
+            <form onSubmit={this.handleSubmitNote}>
                 <h2>Add New Note</h2>
                 <ul id="menuHeader">
                     <li><select  id="dropdown" name="rating">
