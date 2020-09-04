@@ -20,7 +20,7 @@ export default class AddFolder extends React.Component {
                 }} >
                 <h2>Add New Folder</h2>
                 <label>Folder Name:</label>
-                <input name="folderName" type='text'></input>
+                <input name="folderName" type='text' pattern=".{3,}" placeholder="3 character minumum"required></input>
                 <button type='submit' >Submit</button>
                 
             </form>

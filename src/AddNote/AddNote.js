@@ -20,14 +20,14 @@ export default class AddNote extends React.Component {
                         <option >Select Folder</option>
                         {this.context.folders.map(folder => {
                             return(
-                            <option value={folder.id}>
+                            <option key={folder.name} value={folder.id}>
                                 {folder.name}
                             </option>
                         )})}
                     </select></li>
                 </ul>
                 <label>Note Name:</label>
-                <input type='text' name="noteName"></input><br />
+                <input pattern=".{3,}" type='text' name="noteName" placeholder="3 character minimum"required></input><br />
                 <label>New Content:</label>
                 <input type='text' name="noteContent"></input>
                 <button type='submit'>Submit</button>
