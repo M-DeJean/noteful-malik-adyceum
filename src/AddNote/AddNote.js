@@ -1,12 +1,16 @@
 import React from 'react';
 import ApiContext from '../ApiContext'
+
 export default class AddNote extends React.Component {
+
     static contextType = ApiContext
+
     handleSubmitNote = (e) => {
         e.preventDefault()
         this.context.addNote(e.target.noteName.value, e.target.noteContent.value, e.target.folderId.value)
         this.props.history.push('/')
     }
+
     render() {
         return (
             <form className="form" onSubmit={this.handleSubmitNote}>
@@ -30,4 +34,5 @@ export default class AddNote extends React.Component {
             </form >
         );
     }
+
 }
