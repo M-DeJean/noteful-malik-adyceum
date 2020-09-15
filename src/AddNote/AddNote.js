@@ -29,7 +29,7 @@ export default class AddNote extends React.Component {
                 <label>Note Name:</label>
                 <input pattern=".{3,}" type='text' name="noteName" placeholder="3 character minimum"required></input><br />
                 <label>New Content:</label>
-                <input type='text' name="noteContent"></input>
+                <input type='text' name="noteContent" required></input>
                 <button type='submit'>Submit</button>
             </form >
         );

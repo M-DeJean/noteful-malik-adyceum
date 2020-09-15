@@ -53,6 +53,7 @@ class App extends Component {
                 folders.push(data)
                 this.setState({ folders })
             })
+            .catch(error => this.setState({error: 'Could not connect to server, please try again later.'}))
     }
 
     addNote = (name, context, folderId) => {
@@ -62,7 +63,8 @@ class App extends Component {
             body: JSON.stringify({
                 name,
                 context,
-                folderId
+                folderId,
+                modified: new Date()
             })
         })
             .then(res => res.json())
@@ -71,6 +73,7 @@ class App extends Component {
                 notes.push(data)
                 this.setState({ notes })
             })
+            .catch(error => this.setState({error: 'Could not connect to server, please try again later.'}))
     }
 
     handleDeleteNote = noteId => {
